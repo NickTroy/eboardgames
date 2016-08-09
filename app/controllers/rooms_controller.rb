@@ -28,14 +28,10 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(room_params)
     @room.user_id = current_user.id
-    respond_to do |format|
-      if @room.save
-        format.html { redirect_to @room, notice: 'Room was successfully created.' }
-        format.json { render :show, status: :created, location: @room }
-      else
-        format.html { render :new }
-        format.json { render json: @room.errors, status: :unprocessable_entity }
-      end
+    if @room.save      
+      render json: @room, status: :created
+    else
+      render json: @room.errors, status: :unprocessable_entity
     end
   end
 

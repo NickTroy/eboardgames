@@ -1,8 +1,2 @@
 <%= react_component 'Rooms', { data: (render partial: "rooms/index.json")  } %>
-<h1>Rooms</h1>
 
-<p class="lead"><%= link_to 'New room', new_room_path, class: 'btn btn-primary' %></p>
-
-<ul>
-  <%= render @rooms %>
-</ul>

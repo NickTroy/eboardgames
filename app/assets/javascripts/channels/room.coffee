@@ -1,4 +1,5 @@
 $(document).on 'turbolinks:load', ->
+
   if $('#messages').length > 0
     messages = $('#messages')
     messages_to_bottom = -> messages.scrollTop(messages.prop("scrollHeight"))
@@ -28,6 +29,14 @@ $(document).on 'turbolinks:load', ->
         messages_to_bottom()        
       App.room.speak = (message, room_id) ->
         @perform 'speak', message: message, room_id: room_id
+      App.unsubscribe_if_index = ->
+        pathname = window.location.pathname
+
+        if pathname == '/rooms'
+          console.log App.room
+          App.room.unsubscribe()
+          console.log App.room  
+      App.unsubscribe_if_index()   
     
  
 $(document).on 'keypress', '[data-behavior~=room_speaker]', (event) ->
@@ -36,3 +45,11 @@ $(document).on 'keypress', '[data-behavior~=room_speaker]', (event) ->
     App.room.speak event.target.value, room_id
     event.target.value = ""
     event.preventDefault()
+$(document).on 'click', '.leave_room_page', ->
+  App.room.unsubscribe()
+
+
+
+
+
+

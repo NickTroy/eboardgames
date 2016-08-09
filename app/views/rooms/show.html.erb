@@ -1,5 +1,22 @@
-<h1><%= @room.title %></h1>
+<p id="notice"><%= notice %></p>
 
-<div id="messages">
+<p>
+  <strong>User:</strong>
+  <%= @room.user.email %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @room.title %>
+</p>
+
+<div id="messages" data-room-id="<%= @room.id %>">>
   <%= render @room.messages %>
 </div>
+  
+<form>
+  <label>Say something:</label><br>
+  <input type="text" data-behavior="room_speaker">
+</form>
+
+<%= link_to 'Back', rooms_path %>

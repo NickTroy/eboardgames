@@ -20,6 +20,7 @@
           React.DOM.tr null,
             React.DOM.th null, 'Title'
             React.DOM.th null, 'User'
+            React.DOM.th null, 'Visitors Count'
             React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for room in @state.rooms

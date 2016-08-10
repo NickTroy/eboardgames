@@ -1,10 +1,27 @@
 class RoomChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "rooms_#{params['room_id']}_channel"
+    main_page = params['main_page']
+    room_id = params['room_id']
+    if main_page
+      stream_from "rooms_channel"
+    else
+      stream_from "rooms_#{room_id}_channel"
+      room = Room.find(room_id)
+      current_visitors_count = room.visitors_count 
+      room.update_attributes(visitors_count: current_visitors_count + 1)
+      ActionCable.server.broadcast "rooms_channel", room_id: room_id
+    end
   end
  
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    main_page = params['main_page']
+    room_id = params['room_id']
+    unless main_page
+      room = Room.find(room_id)
+      current_visitors_count = room.visitors_count 
+      room.update_attributes(visitors_count: current_visitors_count - 1)
+      ActionCable.server.broadcast "rooms_channel", room_id: room_id
+    end
   end
  
   def speak(data)

@@ -1,5 +1,4 @@
 json.array! @rooms do |room|
-  json.id room.id
-  json.title room.title
+  json.(room, :id, :title, :visitors_count)
   json.user_name room.user.email
 end

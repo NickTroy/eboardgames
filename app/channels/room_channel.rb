@@ -9,7 +9,6 @@ class RoomChannel < ApplicationCable::Channel
       room = Room.find(room_id)
       current_visitors_count = room.visitors_count 
       room.update_attributes(visitors_count: current_visitors_count + 1)
-      ActionCable.server.broadcast "rooms_channel", room_id: room_id
     end
   end
  
@@ -20,7 +19,6 @@ class RoomChannel < ApplicationCable::Channel
       room = Room.find(room_id)
       current_visitors_count = room.visitors_count 
       room.update_attributes(visitors_count: current_visitors_count - 1)
-      ActionCable.server.broadcast "rooms_channel", room_id: room_id
     end
   end
  

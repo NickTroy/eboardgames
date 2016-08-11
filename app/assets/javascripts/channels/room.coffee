@@ -15,11 +15,9 @@ $(document).on 'turbolinks:load', ->
         main_page: false
       },
       connected: ->
-        alert("connected")
-        # Called when the subscription is ready for use on the server
+        #alert("connected")
       disconnected: ->
-        alert("disconnected")
-        # Called when the subscription has been terminated by the server
+        #alert("disconnected")
       received: (data) ->
         $('#messages').append data['message']
         messages_to_bottom()
@@ -39,21 +37,13 @@ $(document).on 'turbolinks:load', ->
       main_page: true
     },
     connected: ->
-      alert("connected to main channel")
-      # Called when the subscription is ready for use on the server
+      #alert("connected to main channel")
     disconnected: ->
-      alert("disconnected from main channel")
-      # Called when the subscription has been terminated by the server
+      #alert("disconnected from main channel")
     received: (data) ->
-      console.log("main channel data")
-      console.log(data)
-
-      #$('#messages').append data['message']
-      #messages_to_bottom()
-      # Called when there's incoming data on the websocket for this channel
-    #speak: (message, room_id) ->
-    #  @perform 'speak', message: message, room_id: room_id
-
+      visitors_count = data.visitors_count
+      room_id = data.room_id
+      App.updateVisitorsCount(room_id, visitors_count)
  
 $(document).on 'keypress', '[data-behavior~=room_speaker]', (event) ->
   room_id = $('#messages').data('room-id')

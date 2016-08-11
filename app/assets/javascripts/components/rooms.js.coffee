@@ -1,4 +1,14 @@
 @Rooms = React.createClass
+  componentWillMount: ->
+    App.updateVisitorsCount = (room_id, visitors_count) =>
+      rooms = @state.rooms
+      room_index = 1
+      room = rooms.find (r, index) ->
+        room_index = index
+        r.id == room_id
+      room.visitors_count = visitors_count
+      rooms = React.addons.update(@state.rooms, { $splice: [[room_index, 1, room]] })
+      @replaceState rooms: rooms
   getInitialState: ->
     rooms: JSON.parse(@props.data)
   getDefaultProps: ->
